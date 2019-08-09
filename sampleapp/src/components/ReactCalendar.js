@@ -11,7 +11,7 @@ const customStyles = {
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
 
-  }
+  }//this is for the modal
 };
 Modal.defaultStyles.overlay.backgroundColor = '#212529';
 
