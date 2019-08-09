@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import Modal from 'react-modal';
 import './ReactCalendar.css';
@@ -11,7 +12,7 @@ const customStyles = {
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
 
-  }//this is for the modal
+  }
 };
 Modal.defaultStyles.overlay.backgroundColor = '#212529';
 
@@ -21,6 +22,7 @@ class ReactCalendar extends Component {
 
   constructor() {
     super();
+
     this.main = this.main.bind(this);
     this.upcoming = this.upcoming.bind(this);
     this.passed = this.passed.bind(this);
@@ -43,6 +45,7 @@ class ReactCalendar extends Component {
       holiday: "No Holiday Today",
       hide: false,
       modalIsOpen: false,
+
       details:""
     }
   }
@@ -57,7 +60,12 @@ class ReactCalendar extends Component {
       display: 'none'
     }
     return (
+      <div>
+
+
+
       <div id="main">
+
 <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={e=>this.afterOpenModal.bind(this)}
@@ -65,24 +73,26 @@ class ReactCalendar extends Component {
           contentLabel="Example Modal"
         >
 
-         <p> <h4 style={{textAlign:"center",fontSize:"34px"}}>{this.state.details!=""?this.state.details.date.iso:""}</h4>
+         <p> <h4 style={{textAlign:"center",fontSize:"34px"}}>{this.state.details!=""?this.state.details.date.iso:<h1>"No Date Available"</h1>}</h4>
+         </p><br />
+         <p> <h3 style={{textAlign:"center",}}>{this.state.details!=""?this.state.details.name:<h1>"No Name Available"</h1>}</h3>
+         </p><br />
+        <p> <button style={{position:"relative",left:"5%",}} className="button button3">{this.state.details!=""?this.state.details.type[0]:<h1>"No Specific Details"</h1>}</button></p><br /><br />
+        <p> <h6 style={{textAlign:"center",}}>{this.state.details!=""?this.state.details.description:<h1>"No Description For This Holiday"</h1>}</h6>
          </p>
-         <p> <h3 style={{textAlign:"center",}}>{this.state.details!=""?this.state.details.name:""}</h3>
-         </p>
-        <p> <button className="button button3">{this.state.details!=""?this.state.details.type[0]:""}</button></p>
-        <p> <span >{this.state.details!=""?this.state.details.description:""}</span>
-         </p>
-            <button className="button button1"onClick={e=>this.closeModal()}>close</button>
+            <button className="button button1"onClick={e=>this.closeModal()} style={{position:"relative",left:"8%",}}>close</button>
 
 
         </Modal>
-        <div> {this.state.flag ?
+        <div>
+
+         {this.state.flag ?
 
           <div>
             <div id='date'>
               <button id='current-date' type="button" class="btn btn-primary">{this.state.date}</button><br /><br /><br /><br />
 
-              <div><h3>{this.state.holiday}</h3></div>
+              <div><h3>{this.state.holiday}</h3></div><br /><br />
             </div>
 
             <button id="btn" onClick={this.passed}>passed holidays</button>
@@ -104,9 +114,6 @@ class ReactCalendar extends Component {
                         </div>
                       </div>
 
-                      <div id={i} className="card" style={{ overflow:"auto",position:"relative",top:"10px",display: "none",width: "18rem",height: "10rem",background:"gainsboro"}}>
-                              <p className="card-text" style={{color:"black" }} id={i}>{upcome.description}</p>
-                        </div>
 
                           </div>
                      )
@@ -127,9 +134,7 @@ class ReactCalendar extends Component {
                           </div>
                         </div>
 
-                                              <div id={i} className="card" style={{ overflow:"auto",position:"relative",top:"10px",display: "none",width: "18rem",height: "10rem",background:"gainsboro"}}>
-                                                      <p className="card-text" style={{color:"black" }} id={i}>{pass.description}</p>
-                                                </div>
+
 
                         </div>
                       )
@@ -142,19 +147,29 @@ class ReactCalendar extends Component {
 
           </div>
 
-          : <h1>loading.........</h1>}
+          : <h1 style={{paddingTop:"15%",paddingLeft:"40%"}}>loading.........</h1>}
         </div>
 
       </div>
+
+      </div>
+
     );
   }
 
   async componentDidMount() {
+     //
+     //
     Modal.setAppElement('#main');
     //  document.getElementById('main-announce-holiday');
+
+  //
     const url = "https://calendarific.com/api/v2/holidays?country=IN&year=2019&api_key=0fdf5daf5f815c7bc9fd8b56b1571f5f8cd5a160";
+
     const res = await fetch(url);
+
     const data = await res.json();
+
     for (var i = 0; i < 70; i++) {
 
       //  console.dir(data);
@@ -171,7 +186,7 @@ class ReactCalendar extends Component {
         if ((d === rd) && (m === rm)) {
           //if(1===1){
           this.state = {
-            holiday: 'It is a holiday',
+            holiday: 'Hey,you got Holiday today',
 
           }
           this.setState({ holiday: this.state.holiday })
@@ -183,24 +198,23 @@ class ReactCalendar extends Component {
         this.state.passed.push(data.response.holidays[i]);
       }
 
-    } this.setState({ flag: true });
+    }
     //  console.log(this.state.students);
 
 
+this.setState({ flag: true });
     console.log(this.state.upcoming);
     console.log(this.state.passed);
+
   }
 
 
   upcoming() {
     this.setState({ log: "upcoming" })
-
-
-
-
   }
+
   closeModal() {
-    console.log("hhhh")
+  //  console.log("hhhh")
     this.setState({modalIsOpen: false});
   }
 
